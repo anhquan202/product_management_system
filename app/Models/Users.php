@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Users extends Model
 {
@@ -15,6 +15,8 @@ class Users extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    public $timestamps = true;
 
     protected $fillable = [
         'user_id',

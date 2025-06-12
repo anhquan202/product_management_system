@@ -10,7 +10,7 @@ class UserPermission extends Model
 
     protected $primaryKey = 'user_permission_id';
     public $incrementing = true;
-    protected $keyType = 'bigInteger';
+    protected $keyType = 'int';
     protected $fillable = [
         'user_permission_id',
         'user_id',

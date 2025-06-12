@@ -10,7 +10,7 @@ class Role extends Model
 
     protected $primaryKey = 'role_id';
     public $incrementing = true;
-    protected $keyType = 'bigInteger';
+    protected $keyType = 'int';
     protected $fillable = [
         'role_id',
         'role_name',

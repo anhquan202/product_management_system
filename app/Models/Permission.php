@@ -8,6 +8,7 @@ class Permission extends Model
 {
     protected $table = 'permissions';
     protected $primaryKey = 'permission_id';
+    protected $keyType = 'int';
     public $timestamps = true;
     protected $fillable = [
         'permission_id',
