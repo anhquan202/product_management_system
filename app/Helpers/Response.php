@@ -9,11 +9,10 @@ class Response
       'data' => $data
     ], $statusCode);
   }
-  public static function error($message = 'Error', $statusCode = 500, $data = null)
+  public static function error($statusCode = 500, $error = null)
   {
     return response()->json([
-      'message' => $message,
-      'data' => $data
+      'error' => $error
     ], $statusCode);
   }
 }

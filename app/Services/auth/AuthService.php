@@ -3,17 +3,10 @@ namespace App\Services\Auth;
 
 use App\Enum\ResponseCode;
 use App\Models\UserAccount;
-use App\Services\User\IUserService;
 use Illuminate\Support\Facades\Hash;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthService implements IAuthService
 {
-  protected $iUserService;
-  public function construct(IUserService $iUserService)
-  {
-    $this->iUserService = $iUserService;
-  }
   public function loginByUsername(array $credentials)
   {
     $username = $credentials['username'];
