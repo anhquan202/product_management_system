@@ -22,21 +22,17 @@ class AuthMiddleware
         $token = Cookie::get('access_token');
 
         if (!$token) {
-            return HelpersResponse::error('Unauthorized - Token not found', ResponseCode::UNAUTHORIZED);
+            return HelpersResponse::error(ResponseCode::UNAUTHORIZED, 'Unauthorized - Token not found');
         }
 
         try {
-            // JWTAuth giờ sẽ dùng model UserAccount nhờ config/jwt.php
-            $userAccount = JWTAuth::setToken($token)->authenticate();
-
-            if (!$userAccount) {
-                return HelpersResponse::error('Unauthorized - Invalid user', ResponseCode::UNAUTHORIZED);
-            }
-
-            // Đính kèm nếu controller cần
-            $request->merge(['auth_user' => $userAccount]);
+            $payload = JWTAuth::setToken($token)->getPayload();
+            $request->merge([
+                'auth_user_id' => $payload->get('user_id'),
+                'auth_roles' => $payload->get('roles'),
+            ]);
         } catch (\Exception $e) {
-            return HelpersResponse::error('Unauthorized - Token error', ResponseCode::UNAUTHORIZED);
+            return HelpersResponse::error(ResponseCode::UNAUTHORIZED, 'Invalid Token');
         }
 
         return $next($request);

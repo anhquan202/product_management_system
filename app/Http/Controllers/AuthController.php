@@ -29,7 +29,7 @@ class AuthController extends Controller
                 return Response::error('Login Failed', ResponseCode::UNAUTHORIZED);
             }
         } catch (\Throwable $th) {
-            return Response::error($th->getMessage(), ResponseCode::INTERNAL_SERVER_ERROR);
+            return Response::error(ResponseCode::INTERNAL_SERVER_ERROR, $th->getMessage());
         }
     }
 }
