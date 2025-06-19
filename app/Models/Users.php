@@ -25,6 +25,8 @@ class Users extends Model
         'phone_number',
         'email',
         'address',
+        'gender',
+        'status'
     ];
 
     protected static function booted()

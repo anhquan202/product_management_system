@@ -21,6 +21,5 @@ Route::prefix('admin')
     ->controller(UserController::class)
     ->group(function () {
         Route::get('/users', 'getUsers');
-        Route::put('/users/{id}', 'updateUser');
-        Route::delete('/users/{id}', 'deleteUser');
+        Route::get('/users/{user_id}', 'getUserById');
     });
