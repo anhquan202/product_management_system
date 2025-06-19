@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_permissions', function (Blueprint $table) {
-            $table->id('user_permission_id')->primary();
-            $table->foreignUuid('user_id')->constrained('users', 'user_id')->onDelete('cascade');
-            $table->foreignId('permission_id')->constrained('permissions', 'permission_id')->onDelete('cascade');
+        Schema::create('permission_modules', function (Blueprint $table) {
+            $table->id('permission_module_id')->primary();
+            $table->string('module_key')->unique();
+            $table->string('module_name');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_permissions');
+        Schema::dropIfExists('permission_modules');
     }
 };
