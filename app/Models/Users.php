@@ -42,4 +42,19 @@ class Users extends Model
     {
         return $this->hasOne(UserAccount::class, 'user_id', 'user_id');
     }
+    public function userPermissionDetail()
+    {
+        return $this->hasManyThrough(
+            PermissionDetail::class,
+            UserPermissionDetail::class,
+            'user_id',
+            'permission_detail_id',
+            'user_id',
+            'id'
+        )->with('module');
+    }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    }
 }

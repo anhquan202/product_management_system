@@ -17,7 +17,7 @@ Route::prefix('profile')
         Route::put('/', 'updateProfile');
     });
 Route::prefix('admin')
-    ->middleware(['jwt.auth.custom', 'check.role:admin'])
+    ->middleware(['jwt.auth.custom', 'check.role:admin', 'check.permission:user.read'])
     ->controller(UserController::class)
     ->group(function () {
         Route::get('/users', 'getUsers');

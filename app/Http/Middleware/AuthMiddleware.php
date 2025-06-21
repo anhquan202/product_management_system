@@ -27,9 +27,11 @@ class AuthMiddleware
 
         try {
             $payload = JWTAuth::setToken($token)->getPayload();
+            $user = $payload->get('users');
             $request->merge([
-                'auth_user_id' => $payload->get('user_id'),
-                'auth_roles' => $payload->get('roles'),
+                'auth_user_id' => $user['user_id'] ?? null,
+                'auth_roles' => $user['roles'] ?? [],
+                'auth_permissions' => $user['permissions'] ?? [],
             ]);
         } catch (\Exception $e) {
             return HelpersResponse::error(ResponseCode::UNAUTHORIZED, 'Invalid Token');
