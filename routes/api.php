@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->controller(AuthController::class)->group(function () {
     Route::post('/login/username', 'loginByUsername');
+    Route::get('/refresh-token', 'refreshToken');
 });
 
 Route::prefix('profile')
@@ -14,7 +15,7 @@ Route::prefix('profile')
     ->controller(ProfileController::class)
     ->group(function () {
         Route::get('/', 'getProfile');
-        Route::put('/', 'updateProfile');
+        // Route::put('/', 'updateProfile');
     });
 Route::prefix('admin')
     ->middleware(['jwt.auth.custom', 'check.role:admin', 'check.permission:user.read'])

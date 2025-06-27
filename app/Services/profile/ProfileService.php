@@ -35,7 +35,7 @@ class ProfileService implements IProfileService
   {
     try {
       $payload = $this->iTokenService->getPayload();
-      $user_id = $payload['user_id'] ?? null;
+      $user_id = $payload['users']['user_id'];
       return $user_id;
     } catch (\Exception $e) {
       throw new \Exception('Failed to get user ID from token: ' . $e->getMessage());
