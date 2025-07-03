@@ -18,29 +18,15 @@ class ProfileService implements IProfileService
     $this->iTokenService = $iTokenService;
   }
 
-  public function getProfile()
+  public function getProfile($user_id)
   {
-    $user_id = $this->getUserId();
     return Users::find($user_id);
   }
 
-  public function updateProfile(array $data)
+  public function updateProfile(string $user_id, array $data)
   {
-    $user = Users::findOrFail($this->getUserId());
+    $user = Users::findOrFail($user_id);
     $user->update($data);
     return $user;
-  }
-
-  private function getUserId()
-  {
-    try {
-      $payload = $this->iTokenService->getPayload();
-      $user_id = $payload['users']['user_id'];
-      return $user_id;
-    } catch (\Exception $e) {
-      throw new \Exception('Failed to get user ID from token: ' . $e->getMessage());
-    } catch (\Throwable $th) {
-      throw $th;
-    }
   }
 }

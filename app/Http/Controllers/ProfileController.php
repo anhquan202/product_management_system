@@ -17,10 +17,11 @@ class ProfileController extends Controller
     {
         $this->iProfileService = $iProfileService;
     }
-    public function getProfile()
+    public function getProfile(Request $request)
     {
         try {
-            $personal_info = $this->iProfileService->getProfile();
+            $user_id = $request->input('user_id');
+            $personal_info = $this->iProfileService->getProfile($user_id);
             return Response::success($personal_info, 'Profile fetched successfully');
         } catch (\Throwable $th) {
             return Response::error(ResponseCode::INTERNAL_SERVER_ERROR, $th->getMessage());
@@ -28,10 +29,9 @@ class ProfileController extends Controller
     }
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $credentials = $request->validated();
         try {
-            $new_personal_profile = $this->iProfileService->updateProfile($credentials);
-            return Response::success($new_personal_profile, 'Profile updated successfully');
+            $data = $request->validated();
+            return Response::success($data, 'Profile updated successfully');
         } catch (\Throwable $th) {
             return Response::error(ResponseCode::INTERNAL_SERVER_ERROR, $th->getMessage());
         }

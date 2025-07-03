@@ -14,7 +14,7 @@ Route::prefix('profile')
     ->middleware(['jwt.auth.custom'])
     ->controller(ProfileController::class)
     ->group(function () {
-        Route::get('/', 'getProfile');
+        Route::post('/me', 'getProfile');
         // Route::put('/', 'updateProfile');
     });
 Route::prefix('admin')

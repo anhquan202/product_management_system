@@ -19,22 +19,21 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = Cookie::get('access_token');
+        $token = $request->bearerToken();
 
         if (!$token) {
             return HelpersResponse::error(ResponseCode::UNAUTHORIZED, 'Unauthorized - Token not found');
         }
-
         try {
-            $payload = JWTAuth::setToken($token)->getPayload();
-            $user = $payload->get('users');
+            $decodedToken = JWTAuth::setToken($token)->getPayload();
+            $user = $decodedToken->get('users');
             $request->merge([
                 'auth_user_id' => $user['user_id'] ?? null,
                 'auth_roles' => $user['roles'] ?? [],
                 'auth_permissions' => $user['permissions'] ?? [],
             ]);
         } catch (\Exception $e) {
-            return HelpersResponse::error(ResponseCode::UNAUTHORIZED, 'Invalid Token');
+            return HelpersResponse::error(ResponseCode::UNAUTHORIZED, 'Unauthorized');
         }
 
         return $next($request);
